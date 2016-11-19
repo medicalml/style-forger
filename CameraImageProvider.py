@@ -1,10 +1,7 @@
 import cv2
 import config
-from PIL import Image, ImageTk
-
-def resizeImage(image, size):
-    resized = image.resize(size)
-    return ImageTk.PhotoImage(resized)
+from PIL import Image
+from helpers import resizeImage
 
 class CameraImageProvider:
     def __init__(self, displaySize):
