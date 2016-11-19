@@ -1,6 +1,6 @@
 import Tkinter as tk
 from CameraImageProvider import CameraImageProvider
-
+from AsyncJob import AsyncJob
 class ApplicationCanvas(tk.Canvas):
     def __init__(self, root):
         tk.Canvas.__init__(self, master=root, bg="white")
@@ -12,13 +12,12 @@ class ApplicationCanvas(tk.Canvas):
         self.update()
 
         self.cameraImageProvider = CameraImageProvider((windowWidth, windowHeight))
+        self.cameraLookupJob = AsyncJob(root, 50, ApplicationCanvas.updateCameraLookup, self)
 
-        ApplicationCanvas.updateCameraLookup(self)
         self.pack()
 
     @staticmethod
     def updateCameraLookup(app):
         a = app.cameraImageProvider.getDisplayPhotoImage()
         app.create_image(app.windowCenter, image = a)
-        app.master.after(50, ApplicationCanvas.updateCameraLookup, app)
 
