@@ -1,4 +1,6 @@
 import Tkinter as tk
+
+import config
 from helpers import resizeRawImage
 
 
@@ -33,3 +35,19 @@ class FullscreenCanvas(tk.Canvas):
         photoImage = resizeRawImage(img, self.windowSize)
         self.displayedImagesRefs.append(photoImage)
         self.create_image(self.windowCenter, image=photoImage)
+
+    def displayCircle(self, text=""):
+        self.create_oval(self.boundingBoxSquare(self.windowCenter, self.calculateCircleSize()),
+                         fill=config.PRIMARY_COLOR,
+                         outline="")
+
+    def calculateCircleSize(self):
+        return int(min(self.windowSize) * config.CIRCLE_RATIO)
+
+    def boundingBoxSquare(self, center, size):
+        x, y = center
+        return (
+            x-size, # x of top-right corner
+            y-size,  # y of top-right corner
+            x+size, # x of top-right corner
+            y+size)  # y of top-right corner

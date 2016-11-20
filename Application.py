@@ -40,4 +40,4 @@ class Application():
             self.transformationDeleter.run()
 
     def showLoadingAnimation(self):
-        pass
+        self.canvas.displayCircle()
