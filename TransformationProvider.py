@@ -1,6 +1,7 @@
 from time import sleep
 
 from AsyncTransformator import AsyncTransformator
+from chainer_fast_neuralstyle.TransformationApplier import TransformationApplier
 
 
 class TransformationApplierMock:
@@ -19,7 +20,7 @@ class TransformationProvider:
         TransformationProvider.instance = self
         self.cameraImageProvider = cameraImageProvider
         self.resetTransformationState()
-        self.transformationApplier = TransformationApplierMock()
+        self.transformationApplier = TransformationApplier()
 
     @staticmethod
     def initiateFrameTransformation(event):
