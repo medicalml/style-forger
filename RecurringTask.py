@@ -8,9 +8,7 @@ class RecurringTask:
         self.staticMethod = staticMethod
         self.methodArgs = methodArgs
         self.delay = delayInMs
-        self.isJobRunning = False
 
-    def start(self):
         self.isJobRunning = True
         RecurringTask.execute(self)
 
