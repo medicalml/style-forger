@@ -1,5 +1,10 @@
 from __future__ import division #for / to return float by default
-from PIL import ImageTk
+from PIL import Image, ImageTk
+
+
+def resizeRawImage(imageRaw, size, cover = True):
+    image = Image.fromarray(imageRaw)
+    return resizeImage(image, size, cover)
 
 def resizeImage(image, size, cover = True):
     newSize = size if not cover else calculateSizeToCover(image.size, size)

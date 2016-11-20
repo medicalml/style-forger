@@ -1,7 +1,6 @@
 import cv2
 import config
-from PIL import Image
-from helpers import resizeImage
+from helpers import resizeRawImage
 
 class CameraImageProvider:
     def __init__(self, displaySize):
@@ -9,10 +8,10 @@ class CameraImageProvider:
         self.displaySize = displaySize
 
     def getDisplayPhotoImage(self):
-        self.lastFrame = resizeImage(Image.fromarray(self.getImageRaw()), self.displaySize)
+        self.lastFrame = resizeRawImage(self.getRawImage(), self.displaySize)
         return self.lastFrame
 
-    def getImageRaw(self):
+    def getRawImage(self):
         _, frame = self.cap.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         return frame
