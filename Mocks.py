@@ -12,4 +12,4 @@ class TransformationApplierMock:
         return frame
 
 def afterTransformationActionMock(imageRaw):
-    print("afterTransformationActionMock: handling array with shape {1}".format(imageRaw.size))
+    print("afterTransformationActionMock: handling array with shape " + str(imageRaw.shape))
