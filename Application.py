@@ -1,18 +1,15 @@
 from FullscreenCanvas import FullscreenCanvas
-from CameraImageProvider import CameraImageProvider
 from RecurringTask import RecurringTask
-from TransformationProvider import TransformationProvider
-from helpers import resizeRawImage
 
 
 class Application():
-    def __init__(self, root):
+    def __init__(self, root, cameraImageProvider, transformationProvider):
         self.root = root
         self.canvas = FullscreenCanvas(root)
         self.imgTransformed = None
 
-        self.cameraImageProvider = CameraImageProvider()
-        self.transformationProvider = TransformationProvider(self.cameraImageProvider)
+        self.cameraImageProvider = cameraImageProvider
+        self.transformationProvider = transformationProvider
         self.cameraLookupTask = self.createCameraLookup()
 
         root.bind('<Return>', self.transformationProvider.initiateFrameTransformation)
