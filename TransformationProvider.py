@@ -1,15 +1,4 @@
-from time import sleep
-
 from AsyncTransformator import AsyncTransformator
-
-class TransformationApplierMock:
-    def __init__(self):
-        pass
-    @staticmethod
-    def transform(self, frame):
-        sleep(1)
-        return frame
-
 
 class TransformationProvider:
     instance = None
