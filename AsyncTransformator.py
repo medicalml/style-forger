@@ -12,7 +12,12 @@ class AsyncTransformator():
 
     def getTransformedFrame(self):
         try:
-            return self.asyncResult.get(timeout=0.5) #in seconds (?)
+            result = self.asyncResult.get(timeout=0.1) #in seconds (?)
+
+            self.pool.terminate()
+            self.pool.join()
+            return result
+
         except TimeoutError:
             print("AsyncTransformation timed-out, ask with isFinished first to avoid blocking main thread")
             raise #rethrow
