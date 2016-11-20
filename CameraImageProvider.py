@@ -1,10 +1,9 @@
 import cv2
 import config
-from helpers import resizeRawImage
 
 class CameraImageProvider:
     def __init__(self):
-        self.cap = cv2.VideoCapture(5)
+        self.cap = cv2.VideoCapture(config.CAMERA_ID)
         try:
             self.getRawImage()
         except:
