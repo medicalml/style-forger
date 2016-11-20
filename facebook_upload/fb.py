@@ -1,30 +1,24 @@
 import requests
-import os.path
+from StringIO import StringIO
+from PIL import Image
 
-page_token = None
-
-#debug
 page_id = '1893358304217403'
-page_token = 'EAACEdEose0cBADBwfEXZBtkb2upWflGLjW2gzVs4XAZBzhAD3x6vGVDs29oUtD8w74lMN9wxOJUXOQ3NQ3zF5TxvyPi5jylaCRx6rdJYZAZArZA3ZAywjINe44VSibwMURsZA0ByQlI7LHfRc3kHEMcneGZBZA6euNeSd1EKjYimSRqZCZBZAIlZAbVGsaWka09SZBZBDcZD'
-filename = 'img.jpg'
 
 def request_token(page_id):
-    user_token = open('token', 'r').read()
-
+    user_token = open('facebook_upload/user_token.txt', 'r').read()
     token_request = requests.get('https://graph.facebook.com/v2.8/{0}?fields=access_token&access_token={1}'.format(page_id, user_token))
+    return token_request.json()['access_token']
 
-    page_token = token_request.json()['access_token']
+def upload_file(imageRaw):
+    image = Image.fromarray(imageRaw)
+    imageStringIO = StringIO()
+    image.save(imageStringIO, "JPEG")
+    imageStringIO.seek(0)
 
-def upload_file(page_id, filename):
-    if not os.path.isfile(filename):
-        return False
+    page_token = request_token(page_id)
 
-    # request_token(page_id) # TODO: should request only when neccessary
+    files = {'image': imageStringIO}
+    url = 'https://graph.facebook.com/v2.8/{0}/photos?access_token={1}'.format(page_id, page_token)
+    upload_request = requests.post(url, files=files)
 
-    upload_request = requests.post('https://graph.facebook.com/v2.8/{0}/photos?access_token={1}'.format(page_id, page_token), files={'image': open(filename, 'rb')})
-
-    print(upload_request.text)
-
-
-# usage:
-# upload_file(page_id, filename)
+    print upload_request.text

@@ -3,13 +3,14 @@ from helpers import RecurringTask, DelayedTask
 
 
 class Application():
-    def __init__(self, root, cameraImageProvider, transformationProvider):
+    def __init__(self, root, cameraImageProvider, transformationProvider, afterTransformationAction):
         self.root = root
         self.canvas = FullscreenCanvas(root)
         self.imgTransformed = None
 
         self.cameraImageProvider = cameraImageProvider
         self.transformationProvider = transformationProvider
+        self.afterTransformationAction = afterTransformationAction
         self.cameraLookupTask = self.createCameraLookup()
         self.transformationDeleter = DelayedTask(root, 2000, self.forgetTransformation)
 
@@ -37,6 +38,7 @@ class Application():
     def fetchAwaitingTransformation(self):
         if self.transformationProvider.hasTransformedFrameWaiting():
             self.imgTransformed = self.transformationProvider.getTransformedFrame()
+            self.afterTransformationAction(self.imgTransformed.copy())
             self.transformationDeleter.run()
 
     def showLoadingAnimation(self):
