@@ -2,12 +2,14 @@ import Tkinter as tk
 from Application import Application
 from CameraImageProvider import CameraImageProvider
 from TransformationProvider import TransformationProvider
+import config
 
-# from chainer_fast_neuralstyle.TransformationApplier import TransformationApplier
-# transformationApplier = TransformationApplier()
-
-from TransformationApplierMock import TransformationApplierMock
-transformationApplier = TransformationApplierMock(1)
+if config.MOCK_TRANSFORMATION_APPLIER:
+    from TransformationApplierMock import TransformationApplierMock
+    transformationApplier = TransformationApplierMock(1)
+else:
+    from chainer_fast_neuralstyle.TransformationApplier import TransformationApplier
+    transformationApplier = TransformationApplier()
 
 cameraImageProvider = CameraImageProvider()
 transformationProvider = TransformationProvider(cameraImageProvider, transformationApplier)
