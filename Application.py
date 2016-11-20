@@ -1,5 +1,5 @@
 from FullscreenCanvas import FullscreenCanvas
-from helpers import RecurringTask
+from helpers import RecurringTask, DelayedTask
 
 
 class Application():
@@ -11,6 +11,7 @@ class Application():
         self.cameraImageProvider = cameraImageProvider
         self.transformationProvider = transformationProvider
         self.cameraLookupTask = self.createCameraLookup()
+        self.transformationDeleter = DelayedTask(root, 2000, self.forgetTransformation)
 
         root.bind('<Return>', self.transformationProvider.initiateFrameTransformation)
 
@@ -18,10 +19,14 @@ class Application():
         cameraLookupTask = RecurringTask(self.root, 50, self.updateCameraLookup)
         return cameraLookupTask
 
+    def forgetTransformation(self):
+        self.imgTransformed = None
+
     def updateCameraLookup(self):
         self.canvas.flush()
         self.canvas.displayImgArrayFullscreen(self.cameraImageProvider.getRawImage())
         if self.transformationProvider.hasTransformedFrameWaiting():
             self.imgTransformed = self.transformationProvider.getTransformedFrame()
+            self.transformationDeleter.run()
         if self.imgTransformed is not None:
             self.canvas.displayImgArrayFullscreen(self.imgTransformed)

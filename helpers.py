@@ -18,25 +18,50 @@ def calculateSizeToCover(srcSize, maxSize):
     ratio = max(maxWidth / srcWidth, maxHeight / srcHeight)
     return int(srcWidth*ratio), int(srcHeight*ratio)
 
+class DelayedTask:
+    def __init__(self,
+                 tkRoot,
+                 delayInMs,
+                 command,
+                 *commandArgs):
+        self.tkRoot = tkRoot
+        self.command = command
+        self.commandArgs = commandArgs
+        self.delay = delayInMs
+        self.job = None
+
+    def run(self):
+        self.cancel()
+        self.job = self.tkRoot.after(
+            self.delay,
+            self.execute)
+
+    def execute(self):
+        self.command(*self.commandArgs)
+        self.job = None
+
+    def cancel(self):
+        if self.job is not None:
+            self.tkRoot.after_cancel(self.job)
+            self.job = None
+
 class RecurringTask:
     def __init__(self,
                  tkRoot,
                  delayInMs,
-                 staticMethod,
-                 *methodArgs):
+                 command,
+                 *commandArgs):
         self.tkRoot = tkRoot
-        self.staticMethod = staticMethod
-        self.methodArgs = methodArgs
+        self.command = command
+        self.commandArgs = commandArgs
         self.delay = delayInMs
 
-        self.isJobRunning = True
         self.execute()
 
     def execute(self):
-        if self.isJobRunning:
-            self.staticMethod(*self.methodArgs)
-            self.tkRoot.after(self.delay,
-                              self.execute)
+        self.command(*self.commandArgs)
+        self.tkRoot.after(self.delay,
+                          self.execute)
 
     def stop(self):
         self.isJobRunning = False
