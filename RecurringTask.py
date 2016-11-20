@@ -10,15 +10,13 @@ class RecurringTask:
         self.delay = delayInMs
 
         self.isJobRunning = True
-        RecurringTask.execute(self)
+        self.execute()
 
-    @staticmethod
-    def execute(asyncJob):
-        if asyncJob.isJobRunning:
-            asyncJob.staticMethod(*asyncJob.methodArgs)
-            asyncJob.tkRoot.after(asyncJob.delay,
-                                  RecurringTask.execute,
-                                  asyncJob)
+    def execute(self):
+        if self.isJobRunning:
+            self.staticMethod(*self.methodArgs)
+            self.tkRoot.after(self.delay,
+                                  self.execute)
 
     def stop(self):
         self.isJobRunning = False

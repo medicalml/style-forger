@@ -15,7 +15,7 @@ class Application():
         root.bind('<Return>', self.transformationProvider.initiateFrameTransformation)
 
     def createCameraLookup(self):
-        cameraLookupTask = RecurringTask(self.root, 50, Application.updateCameraLookup, self)
+        cameraLookupTask = RecurringTask(self.root, 50, self.updateCameraLookup)
         return cameraLookupTask
 
     def updateCameraLookup(self):
