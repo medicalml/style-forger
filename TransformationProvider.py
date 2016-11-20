@@ -13,7 +13,7 @@ class TransformationProvider:
     def initiateFrameTransformation(event):
         self = TransformationProvider.instance
         assert self is not None
-        if not self.isTransformationInProgress():
+        if not self.isProcessing():
             self.transformCurrentFrame()
 
     def transformCurrentFrame(self):
@@ -21,14 +21,14 @@ class TransformationProvider:
         frame = self.cameraImageProvider.getRawImage()
         self.asyncTransformator = AsyncTransformator(self.transformationApplier, frame)
 
-    def isTransformationInProgress(self):
+    def isProcessing(self):
         return self.asyncTransformator is not None
 
     def hasTransformedFrameWaiting(self):
-        return self.asyncTransformator.isFinished() if self.isTransformationInProgress() else False
+        return self.asyncTransformator.isFinished() if self.isProcessing() else False
 
     def getTransformedFrame(self):
-        if self.isTransformationInProgress():
+        if self.isProcessing():
             frame = self.asyncTransformator.getTransformedFrame()
             self.resetTransformationState()
             return frame
