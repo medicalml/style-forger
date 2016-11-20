@@ -1,5 +1,5 @@
 from FullscreenCanvas import FullscreenCanvas
-from RecurringTask import RecurringTask
+from helpers import RecurringTask
 
 
 class Application():
