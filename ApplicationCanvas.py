@@ -2,17 +2,21 @@ import Tkinter as tk
 from CameraImageProvider import CameraImageProvider
 from RecurringTask import RecurringTask
 from TransformationProvider import TransformationProvider
+from helpers import resizeRawImage
 
 class ApplicationCanvas(tk.Canvas):
     def __init__(self, root):
         tk.Canvas.__init__(self, master=root, bg="white")
         windowHeight, windowWidth = self.getWindowSize()
+        self.windowSize = windowHeight, windowWidth
         self.windowCenter = (windowWidth/2, windowHeight/2)
         self.resizeCanvasToFullscreen(windowHeight, windowWidth)
 
-        self.cameraImageProvider = CameraImageProvider((windowWidth, windowHeight))
-        self.cameraLookupTask = self.createCameraLookup()
+        self.imgTransformed = None
+
+        self.cameraImageProvider = CameraImageProvider()
         self.transformationProvider = TransformationProvider(self.cameraImageProvider)
+        self.cameraLookupTask = self.createCameraLookup()
 
         root.bind('<Return>', self.transformationProvider.initiateFrameTransformation)
 
@@ -24,13 +28,13 @@ class ApplicationCanvas(tk.Canvas):
         return cameraLookupTask
 
     @staticmethod
-    def updateCameraLookup(app):
-        a = app.cameraImageProvider.getDisplayPhotoImage()
-        app.create_image(app.windowCenter, image = a)
-
-    @staticmethod
-    def startTransformationJob(event):
-        print "job started"
+    def updateCameraLookup(self):
+        self.img = resizeRawImage(self.cameraImageProvider.getRawImage(), self.windowSize)
+        self.create_image(self.windowCenter, image = self.img)
+        if self.transformationProvider.hasTransformedFrameWaiting():
+            self.imgTransformed = resizeRawImage(self.transformationProvider.getTransformedFrame(), self.windowSize)
+        if self.imgTransformed is not None:
+            self.create_image(self.windowCenter, image = self.imgTransformed)
 
     def resizeCanvasToFullscreen(self, windowHeight, windowWidth):
         self["width"] = windowWidth
