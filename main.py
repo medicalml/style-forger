@@ -1,11 +1,14 @@
 import Tkinter as tk
 from Application import Application
 from CameraImageStream import CameraImageStream
-from TransformationProvider import TransformationProvider
+from TransformedImageStream import TransformedImageStream
 import config
 import Mocks
 from facebook_upload import fb
 from chainer_fast_neuralstyle.TransformationApplier import TransformationApplier
+
+root = tk.Tk()
+root.attributes("-fullscreen",True)
 
 if config.MOCK_TRANSFORMATION_APPLIER:
     transformationApplier = Mocks.TransformationApplierMock(1)
@@ -18,9 +21,7 @@ else:
     afterTransformationAction = fb.upload_file
 
 cameraImageStream = CameraImageStream()
-transformationProvider = TransformationProvider(cameraImageStream, transformationApplier)
+transformedImageStream = TransformedImageStream(root, cameraImageStream, transformationApplier)
 
-root = tk.Tk()
-root.attributes("-fullscreen",True)
-app = Application(root, cameraImageStream, transformationProvider, afterTransformationAction)
+app = Application(root, cameraImageStream, transformedImageStream, afterTransformationAction)
 root.mainloop()
