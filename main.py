@@ -1,6 +1,6 @@
 import Tkinter as tk
 from Application import Application
-from CameraImageProvider import CameraImageProvider
+from CameraImageStream import CameraImageStream
 from TransformationProvider import TransformationProvider
 import config
 import Mocks
@@ -17,7 +17,7 @@ if config.MOCK_FACEBOOK_UPLOAD:
 else:
     afterTransformationAction = fb.upload_file
 
-cameraImageProvider = CameraImageProvider()
+cameraImageProvider = CameraImageStream()
 transformationProvider = TransformationProvider(cameraImageProvider, transformationApplier)
 
 root = tk.Tk()

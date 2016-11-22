@@ -25,7 +25,7 @@ class Application():
 
     def updateCameraLookup(self):
         self.canvas.flush()
-        self.canvas.displayImgArrayFullscreen(self.cameraImageProvider.getRawImage())
+        self.canvas.displayImgArrayFullscreen(self.cameraImageProvider.getNextFrame())
         self.handleTransformationDisplay()
 
     def handleTransformationDisplay(self):

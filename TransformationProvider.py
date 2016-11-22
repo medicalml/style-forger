@@ -18,7 +18,7 @@ class TransformationProvider:
 
     def transformCurrentFrame(self):
         self.resetTransformationState()
-        frame = self.cameraImageProvider.getRawImage()
+        frame = self.cameraImageProvider.getNextFrame()
         self.asyncTransformator = AsyncTransformator(self.transformationApplier, frame)
 
     def isProcessing(self):
