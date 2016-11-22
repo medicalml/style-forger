@@ -25,5 +25,5 @@ class AsyncTransformator():
             print("getTransformedFrame timed-out, ask with hasAwaitingResult first to avoid blocking main thread")
             raise #rethrow
         except:
-            print("getTransformedFrame failed, try checking if transformation hasAwaitingResult first")
+            print("Error raised while transforming frame")
             raise #rethrow
