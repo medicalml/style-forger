@@ -11,8 +11,10 @@ class FullscreenImageStream:
         self.currentPhoto = None
 
     def draw(self, timePassed):
-        self.currentPhoto = resizeRawImage(self.imageProvider.getRawImage(), self.windowSize)
-        self.canvas.create_image(self.windowCenter, image=self.currentPhoto)
+        rawImage = self.imageProvider.getRawImage()
+        if rawImage is not None:
+            self.currentPhoto = resizeRawImage(rawImage, self.windowSize)
+            self.canvas.create_image(self.windowCenter, image=self.currentPhoto)
 
 def calculateWindowCenter(windowWidth, windowHeight):
     return windowWidth/2, windowHeight/2
