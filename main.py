@@ -17,10 +17,10 @@ if config.MOCK_FACEBOOK_UPLOAD:
 else:
     afterTransformationAction = fb.upload_file
 
-cameraImageProvider = CameraImageStream()
-transformationProvider = TransformationProvider(cameraImageProvider, transformationApplier)
+cameraImageStream = CameraImageStream()
+transformationProvider = TransformationProvider(cameraImageStream, transformationApplier)
 
 root = tk.Tk()
 root.attributes("-fullscreen",True)
-app = Application(root, cameraImageProvider, transformationProvider, afterTransformationAction)
+app = Application(root, cameraImageStream, transformationProvider, afterTransformationAction)
 root.mainloop()

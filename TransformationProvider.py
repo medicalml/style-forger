@@ -3,9 +3,9 @@ from AsyncTransformator import AsyncTransformator
 class TransformationProvider:
     instance = None
 
-    def __init__(self, cameraImageProvider, transformationApplier):
+    def __init__(self, cameraImageStream, transformationApplier):
         TransformationProvider.instance = self
-        self.cameraImageProvider = cameraImageProvider
+        self.cameraImageProvider = cameraImageStream
         self.transformationApplier = transformationApplier
         self.resetTransformationState()
 

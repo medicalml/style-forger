@@ -3,12 +3,12 @@ from helpers import RecurringTask, DelayedTask
 
 
 class Application():
-    def __init__(self, root, cameraImageProvider, transformationProvider, afterTransformationAction):
+    def __init__(self, root, cameraImageStream, transformationProvider, afterTransformationAction):
         self.root = root
         self.canvas = FullscreenCanvas(root)
         self.imgTransformed = None
 
-        self.cameraImageProvider = cameraImageProvider
+        self.cameraImageProvider = cameraImageStream
         self.transformationProvider = transformationProvider
         self.afterTransformationAction = afterTransformationAction
         self.cameraLookupTask = self.createCameraLookup()
