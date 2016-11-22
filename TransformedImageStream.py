@@ -1,5 +1,6 @@
 from AsyncTransformator import AsyncTransformator
 from helpers import DelayedTask
+import config
 
 
 class TransformedImageStream:
@@ -9,7 +10,7 @@ class TransformedImageStream:
         TransformedImageStream.instance = self
         self.cameraImageStream = cameraImageStream
         self.transformationApplier = transformationApplier
-        self.transformationDeleter = DelayedTask(root, 2000, self.forgetTransformation)  # TODO: extract time to config
+        self.transformationDeleter = DelayedTask(root, config.TRANSFORMATION_DISPLAY_TIME, self.forgetTransformation)
         self.transformedFrame = None
         self.asyncTransformator = None
 

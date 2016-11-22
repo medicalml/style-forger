@@ -1,7 +1,6 @@
 from display.FullscreenCanvas import FullscreenCanvas
 from display.PulsingCircle import PulsingCircle
 from display.FullscreenImageStream import FullscreenImageStream
-from helpers import DelayedTask
 
 
 class Application:
