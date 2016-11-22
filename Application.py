@@ -1,6 +1,6 @@
 from display.FullscreenCanvas import FullscreenCanvas
 from display.PulsingCircle import PulsingCircle
-from display.FullscreenImageStream import FullscreenImageStream
+from display.ImageStreamDisplay import ImageStreamDisplay
 
 
 class Application:
@@ -12,8 +12,8 @@ class Application:
 
         self.afterTransformationAction = afterTransformationAction
 
-        self.canvas.addDrawableChild(FullscreenImageStream(self.canvas, cameraImageStream, windowSize))
-        self.canvas.addDrawableChild(FullscreenImageStream(self.canvas, transformedImageStream, windowSize))
+        self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, cameraImageStream, windowSize))
+        self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, transformedImageStream, windowSize))
         self.canvas.addDrawableChild(PulsingCircle(self.canvas, (50,50)))
 
         root.bind('<Return>', transformedImageStream.initiateFrameTransformation)
