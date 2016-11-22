@@ -1,23 +1,29 @@
 from multiprocessing.pool import ThreadPool, TimeoutError
 
 class AsyncTransformator():
-    def __init__(self, transformationApplier, imageArray):
+    def __init__(self, transformationApplier):
         self.pool = ThreadPool(processes=1)
-        self.asyncResult = self.pool.apply_async(transformationApplier.transform,
-                                                 (transformationApplier, imageArray))
-        self.transformedFrame = None
+        self.transformationApplier = transformationApplier
+        self.transformationPromise = None
 
-    def isFinished(self):
-        return self.asyncResult.ready()
+    def startParallelTransformation(self, frame):
+        self.transformationPromise = self.pool.apply_async(self.transformationApplier.transform,
+                                                           (self.transformationApplier, frame))
+
+    def isRunning(self):
+        return self.transformationPromise is not None
+
+    def hasAwaitingResult(self):
+        return self.isRunning() and self.transformationPromise.ready()
 
     def getTransformedFrame(self):
         try:
-            result = self.asyncResult.get(timeout=0.1) #in seconds (?)
-
-            self.pool.terminate()
-            self.pool.join()
+            result = self.transformationPromise.get(timeout=0.1) #in seconds (?)
+            self.transformationPromise = None
             return result
-
         except TimeoutError:
-            print("AsyncTransformation timed-out, ask with isFinished first to avoid blocking main thread")
+            print("getTransformedFrame timed-out, ask with hasAwaitingResult first to avoid blocking main thread")
+            raise #rethrow
+        except:
+            print("getTransformedFrame failed, try checking if transformation hasAwaitingResult first")
             raise #rethrow

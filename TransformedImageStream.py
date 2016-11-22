@@ -8,36 +8,27 @@ class TransformedImageStream:
         self.cameraImageStream = cameraImageStream
         self.transformationApplier = transformationApplier
         self.transformationDeleter = DelayedTask(root, config.TRANSFORMATION_DISPLAY_TIME, self.forgetTransformation)
+        self.asyncTransformator = AsyncTransformator(self.transformationApplier)
         self.transformedFrame = None
-        self.asyncTransformator = None
 
     def getNextFrame(self):
         self.updateTransformation()
         return self.transformedFrame
 
     def initiateFrameTransformation(self, event):
-        if self.isShowingTransformation() and not self.isTransformationProcessing():
-            self.transformCurrentFrame()
+        if self.isShowingTransformation() and not self.asyncTransformator.isRunning():
+            self.startTransformationJob(self.cameraImageStream.getNextFrame())
 
     def isShowingTransformation(self):
         return self.transformedFrame is None
 
-    def transformCurrentFrame(self):
-        self.forgetTransformation()
-        frame = self.cameraImageStream.getNextFrame()
-        self.asyncTransformator = AsyncTransformator(self.transformationApplier, frame)
+    def startTransformationJob(self, frame):
+        self.asyncTransformator.startParallelTransformation(frame)
         self.transformationDeleter.run()
-
-    def hasTransformedFrameWaiting(self):
-        return self.isTransformationProcessing() and self.asyncTransformator.isFinished()
-
-    def isTransformationProcessing(self):
-        return self.asyncTransformator is not None
 
     def forgetTransformation(self):
         self.transformedFrame = None
 
     def updateTransformation(self):
-        if self.hasTransformedFrameWaiting():
+        if self.asyncTransformator.hasAwaitingResult():
             self.transformedFrame = self.asyncTransformator.getTransformedFrame()
-            self.asyncTransformator = None
