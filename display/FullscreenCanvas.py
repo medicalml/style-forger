@@ -14,6 +14,7 @@ class FullscreenCanvas(tk.Canvas):
     def __init__(self, root, windowSize):
         tk.Canvas.__init__(self, master=root, bg="white")
         self.windowSize = windowSize
+        self.update()
         self.resizeCanvasToFullscreen(*self.windowSize)
 
         self.lastDrawTime = getPreciseTimeMs()
@@ -41,7 +42,8 @@ class FullscreenCanvas(tk.Canvas):
     def flush(self):
         self.delete("all")
 
-    def resizeCanvasToFullscreen(self, windowHeight, windowWidth):
+    def resizeCanvasToFullscreen(self, windowWidth, windowHeight):
+        self.update()
         self["width"] = windowWidth
         self["height"] = windowHeight
         self.update()
