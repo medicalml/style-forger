@@ -1,5 +1,4 @@
 from __future__ import print_function
-from PIL import Image, ImageFilter
 import time
 from chainer import cuda, serializers
 from net import *

@@ -21,4 +21,4 @@ class TransformationApplier:
 
     @staticmethod
     def transform(self, image):
-        return generate(self.model, image)
+        return generate(self.model, image, config.GPU_UNIT)
