@@ -1,15 +1,15 @@
 import cv2
 import config
 
-class CameraImageProvider:
+class CameraImageStream:
     def __init__(self):
         self.cap = cv2.VideoCapture(config.CAMERA_ID)
         try:
-            self.getRawImage()
+            self.getNextFrame()
         except:
             raise EnvironmentError('No camera on this id, available ids: ' + str(getCameraIdsList()))
 
-    def getRawImage(self):
+    def getNextFrame(self):
         _, frame = self.cap.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         return frame

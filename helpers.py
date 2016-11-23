@@ -63,5 +63,3 @@ class RecurringTask:
         self.tkRoot.after(self.delay,
                           self.execute)
 
-    def stop(self):
-        self.isJobRunning = False
