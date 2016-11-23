@@ -3,6 +3,7 @@ from display.PulsingCircle import PulsingCircle
 from display.ImageStreamDisplay import ImageStreamDisplay
 
 
+# TODO: make all classes extend Object
 class Application:
     def __init__(self, root, cameraImageStream, transformedImageStream, afterTransformationAction):
         self.root = root
@@ -14,7 +15,7 @@ class Application:
 
         self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, cameraImageStream, windowSize))
         self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, transformedImageStream, windowSize))
-        self.canvas.addDrawableChild(PulsingCircle(self.canvas, (50,50)))
+        #self.canvas.addDrawableChild(PulsingCircle(self.canvas, (50,50)))
 
         root.bind('<Return>', transformedImageStream.initiateFrameTransformation)
 
