@@ -5,13 +5,10 @@ from display.ImageStreamDisplay import ImageStreamDisplay
 
 # TODO: make all classes extend Object
 class Application:
-    def __init__(self, root, cameraImageStream, transformedImageStream, afterTransformationAction):
+    def __init__(self, root, cameraImageStream, transformedImageStream):
         self.root = root
         windowSize = getWindowSize(root)
         self.canvas = FullscreenCanvas(root, windowSize)
-        self.imgTransformed = None
-
-        self.afterTransformationAction = afterTransformationAction
 
         self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, cameraImageStream, windowSize))
         self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, transformedImageStream, windowSize))

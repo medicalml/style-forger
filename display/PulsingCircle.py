@@ -4,7 +4,7 @@ import config
 from math import cos
 
 class PulsingCircle(Animation):
-    cycleDuration = 1000
+    cycleDuration = 500
     circleBaseSize = 100
     sizeDifference = 30
     def __init__(self, canvas, circleCenter):

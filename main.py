@@ -21,7 +21,7 @@ else:
     afterTransformationAction = fb.upload_file
 
 cameraImageStream = CameraImageStream()
-transformedImageStream = TransformedImageStream(root, cameraImageStream, transformationApplier)
+transformedImageStream = TransformedImageStream(root, cameraImageStream, transformationApplier, afterTransformationAction)
 
-app = Application(root, cameraImageStream, transformedImageStream, afterTransformationAction)
+app = Application(root, cameraImageStream, transformedImageStream)
 root.mainloop()
