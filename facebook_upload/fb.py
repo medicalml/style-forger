@@ -1,8 +1,9 @@
 import requests
 from StringIO import StringIO
 from PIL import Image
+import config
 
-page_id = '1893358304217403'
+page_id = '1880783985473739'
 
 def request_token(page_id):
     user_token = open('facebook_upload/user_token.txt', 'r').read()
@@ -21,4 +22,18 @@ def upload_file(imageRaw):
     url = 'https://graph.facebook.com/v2.8/{0}/photos?access_token={1}'.format(page_id, page_token)
     upload_request = requests.post(url, files=files)
 
-    print upload_request.text
+    response = upload_request.json()
+
+    if 'error' in response:
+        # log error
+        log_message = "{0}: {1}".format(response['error']['type'], response['error']['message'])
+
+        return False
+    else:
+        if 'id' in response:
+            # successful POST
+            log_message = "Success: photo id:{0}".format(response['id'])
+
+            return True
+        else:
+            return False
