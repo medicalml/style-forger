@@ -15,8 +15,4 @@ class Animation(object):
         self.currentCycleTime =  newCycleTime % self.cycleDuration
 
     def calculatePhase(self):
-        if self.cycleDuration > 0:
-            phase = float(self.currentCycleTime) / float(self.cycleDuration) #floating point value between 0 and 1
-            return phase
-        else:
-            return 0.0
+        return float(self.currentCycleTime) / float(self.cycleDuration) #floating point value between 0 and 1
