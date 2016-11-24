@@ -3,6 +3,7 @@ GPU_UNIT = -1 # -1 for CPU, 0 for first gpu, 1 for second, etc
 
 PRIMARY_COLOR = '#E3FF00'
 CANVAS_MAX_FPS = 30
+CANVAS_SHOW_FPS = True
 
 TRANSFORMATION_DISPLAY_TIME = 2000
 

@@ -23,21 +23,26 @@ class FullscreenCanvas(tk.Canvas):
         self.task = RecurringTask(
             tkRoot=root,
             delayInMs=1,  # check on every mainloop run
-            command=self.drawChildren)
+            command=self.redraw)
 
         self.pack()
 
     def addDrawableChild(self, drawable):
         self.drawableChildren.append(drawable)
 
-    def drawChildren(self):
+    def redraw(self):
         newTime = getPreciseTimeMs()
         timePassed = newTime - self.lastDrawTime
         if timePassed >= FullscreenCanvas.minFrameDelay:
             self.lastDrawTime = newTime
             self.flush()
-            for drawable in self.drawableChildren:
-                drawable.draw(timePassed)
+            self.drawChildren(timePassed)
+
+            self.showFps(timePassed)
+
+    def drawChildren(self, timePassed):
+        for drawable in self.drawableChildren:
+            drawable.draw(timePassed)
 
     def flush(self):
         self.delete("all")
@@ -47,3 +52,10 @@ class FullscreenCanvas(tk.Canvas):
         self["width"] = windowWidth
         self["height"] = windowHeight
         self.update()
+
+    def showFps(self, timePassed):
+        if config.CANVAS_SHOW_FPS:
+            self.create_text(10, 10, anchor='nw',
+                             fill='white',
+                             font = ("Helvetica", 20),
+                             text=str(1000 / timePassed))
