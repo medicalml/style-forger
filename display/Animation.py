@@ -1,7 +1,5 @@
-import time
 
-
-class Animation:
+class Animation(object):
     def __init__(self, canvas, drawCommand, cycleDuration):
         self.canvas = canvas
         self.drawCommand = drawCommand

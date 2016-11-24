@@ -1,6 +1,6 @@
 from multiprocessing.pool import ThreadPool, TimeoutError
 
-class AsyncTransformator():
+class AsyncTransformator(object):
     def __init__(self, transformationApplier):
         self.pool = ThreadPool(processes=1)
         self.transformationApplier = transformationApplier

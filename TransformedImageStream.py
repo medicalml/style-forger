@@ -6,7 +6,7 @@ from facebook_upload import fb
 import Mocks
 
 
-class TransformedImageStream:
+class TransformedImageStream(object):
     def __init__(self, root, cameraImageStream, transformationApplier, afterTransformationAction):
         self.cameraImageStream = cameraImageStream
         self.transformationApplier = transformationApplier

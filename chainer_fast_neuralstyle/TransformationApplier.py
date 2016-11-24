@@ -9,7 +9,7 @@ import config
 #  causing common model and ???
 ##
 
-class TransformationApplier:
+class TransformationApplier(object):
     def __init__(self):
         self.model = FastStyleNet()
         modelPath = 'chainer_fast_neuralstyle/kandinsky_e2_full512.model'

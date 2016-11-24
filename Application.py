@@ -3,8 +3,7 @@ from display.PulsingCircle import PulsingCircle
 from display.ImageStreamDisplay import ImageStreamDisplay
 
 
-# TODO: make all classes extend Object
-class Application:
+class Application(object):
     def __init__(self, root, cameraImageStream, transformedImageStream):
         self.root = root
         windowSize = getWindowSize(root)

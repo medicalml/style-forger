@@ -1,7 +1,7 @@
 import cv2
 import config
 
-class CameraImageStream:
+class CameraImageStream(object):
     def __init__(self):
         self.cap = cv2.VideoCapture(config.CAMERA_ID)
         try:

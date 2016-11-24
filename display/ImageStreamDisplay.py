@@ -2,7 +2,7 @@ from Animation import Animation
 from helpers import resizeRawImage
 
 
-class ImageStreamDisplay:
+class ImageStreamDisplay(object):
     def __init__(self, canvas, imageProvider, imageSize):
         self.canvas = canvas
         self.imageProvider = imageProvider

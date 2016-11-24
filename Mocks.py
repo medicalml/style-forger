@@ -1,7 +1,7 @@
 from time import sleep
 import cv2
 
-class TransformationApplierMock:
+class TransformationApplierMock(object):
     def __init__(self, sleepTime):
         self.sleepTime = sleepTime
         pass

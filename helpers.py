@@ -18,7 +18,7 @@ def calculateSizeToCover(srcSize, maxSize):
     ratio = max(maxWidth / srcWidth, maxHeight / srcHeight)
     return int(srcWidth*ratio), int(srcHeight*ratio)
 
-class DelayedTask:
+class DelayedTask(object):
     def __init__(self,
                  tkRoot,
                  delayInMs,
@@ -45,7 +45,7 @@ class DelayedTask:
             self.tkRoot.after_cancel(self.job)
             self.job = None
 
-class RecurringTask:
+class RecurringTask(object):
     def __init__(self,
                  tkRoot,
                  delayInMs,
