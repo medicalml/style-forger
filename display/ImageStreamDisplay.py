@@ -8,12 +8,15 @@ class ImageStreamDisplay(object):
         self.imageProvider = imageProvider
         self.imageSize = imageSize
         self.imageCenter = calculateImageCenter(*imageSize)
+        self.currentRawImage = None
         self.currentPhoto = None
 
     def draw(self, timePassed):
-        rawImage = self.imageProvider.getNextFrame()
-        if rawImage is not None:
-            self.currentPhoto = resizeRawImage(rawImage, self.imageSize)
+        newRawImage = self.imageProvider.getNextFrame()
+        if newRawImage is not None:
+            if not newRawImage is self.currentRawImage:  #compare object equality for performance on static stream
+                self.currentRawImage = newRawImage
+                self.currentPhoto = resizeRawImage(newRawImage, self.imageSize)
             self.canvas.create_image(self.imageCenter, image=self.currentPhoto)
 
 def calculateImageCenter(windowWidth, windowHeight):
