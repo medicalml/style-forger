@@ -7,7 +7,7 @@ class CameraImageStream:
         try:
             self.getNextFrame()
         except:
-            raise EnvironmentError('No camera on this id, available ids: ' + str(getCameraIdsList()))
+            raise EnvironmentError('No camera on this id, available ids: ' + str(getCameraIdsList()) + ' -- choose on of ids from list --')
 
     def getNextFrame(self):
         _, frame = self.cap.read()
