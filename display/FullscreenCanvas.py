@@ -1,11 +1,7 @@
 import Tkinter as tk
-import time
 from helpers import RecurringTask
+from display_helpers import  getPreciseTimeMs
 import config
-
-
-def getPreciseTimeMs():
-    return int(time.clock() * 1000.0)
 
 
 class FullscreenCanvas(tk.Canvas):
