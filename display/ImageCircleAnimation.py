@@ -1,3 +1,4 @@
+import math
 from PIL.ImageTk import PhotoImage
 
 from Animation import Animation
@@ -7,9 +8,9 @@ from display.display_helpers import cropCircleImage
 
 
 class ImageCircleAnimation(Animation):
-    cycleDuration = 500
-    circleMaxSize = 500
-    sizeDifference = -30
+    cycleDuration = 1000
+    circleStartSize = 1
+    sizeDifference = 500
     imagePath = "url.jpg"
 
     def __init__(self, canvas, imageCenter):
@@ -23,15 +24,16 @@ class ImageCircleAnimation(Animation):
 
     def calculateCircleSize(self, phase):
         sourceWidth, sourceHeight = self.croppedImageSource.size
-        diameter = self.applyEasingFunction(phase, ImageCircleAnimation.sizeDifference) + ImageCircleAnimation.circleMaxSize
+        diameter = easeInQuad(phase) * ImageCircleAnimation.sizeDifference + ImageCircleAnimation.circleStartSize
         resizeRatio = float(diameter) / min(sourceWidth, sourceHeight)
         return int(sourceWidth * resizeRatio), int(sourceHeight * resizeRatio)
-
-    def applyEasingFunction(self, phase, variableProperty):
-        phaseFraction = cos((phase* 2.0)  - 1.0)
-        return phaseFraction * variableProperty
 
     def applyAnimation(self, phase):
         sizeInPhase = self.calculateCircleSize(phase)
         self._displayPhotoRef = PhotoImage(self.croppedImageSource.resize(sizeInPhase))
         return self._displayPhotoRef
+
+def easeInQuad(phase):
+    currentCycleTime, cycleDuration = phase
+    phaseAbsolute = float(currentCycleTime) / float(cycleDuration)
+    return phaseAbsolute**2

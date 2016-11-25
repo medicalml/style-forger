@@ -8,7 +8,7 @@ class Animation(object):
 
     def draw(self, timePassed):
         self.updateCurrentCycleTime(timePassed)
-        self.drawCommand(self.calculatePhase())
+        self.drawCommand((self.currentCycleTime,self.cycleDuration))
 
     def updateCurrentCycleTime(self, timePassed):
         newCycleTime = self.currentCycleTime+timePassed
