@@ -1,6 +1,8 @@
+from Drawable import Drawable
 
-class Animation(object):
+class Animation(Drawable):
     def __init__(self, canvas, drawCommand, cycleDuration):
+        super(Animation, self).__init__()
         self.canvas = canvas
         self.drawCommand = drawCommand
         self.cycleDuration = cycleDuration

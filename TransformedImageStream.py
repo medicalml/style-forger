@@ -2,9 +2,6 @@ from AsyncTransformator import AsyncTransformator
 from helpers import DelayedTask
 import config
 
-from facebook_upload import fb
-import Mocks
-
 
 class TransformedImageStream(object):
     def __init__(self, root, cameraImageStream, transformationApplier, afterTransformationAction):
