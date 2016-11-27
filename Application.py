@@ -1,3 +1,4 @@
+import random
 from display.FullscreenCanvas import FullscreenCanvas
 from display.ImageCircleAnimation import ImageCircleAnimation
 from display.ImageStreamDisplay import ImageStreamDisplay
@@ -11,6 +12,7 @@ class Application(object):
         self.root = root
         self.windowSize, self.windowCenter = _getWindowParameters(root)
         self.canvas = FullscreenCanvas(root, self.windowSize)
+        self.transferedArtStyles = transferedArtStyles
 
         actionWithNotify = lambda x : self.notifyTransformationFinish(x)
         cameraImageStream = CameraImageStream()
@@ -28,9 +30,11 @@ class Application(object):
         afterTransformationAction(imageRaw)
 
     def initiateFrameTransformation(self, event):
-        if self.transformedImageStream.initiateFrameTransformation(event):
-            self.processingAnimation = ImageCircleAnimation(self.canvas, self.windowCenter)
+        style = random.choice(self.transferedArtStyles)
+        if self.transformedImageStream.initiateFrameTransformation(style.modelpath):
+            self.processingAnimation = ImageCircleAnimation(self.canvas, self.windowCenter, style.imagepath)
             self.canvas.addDrawableChild(self.processingAnimation)
+
 
 def _getWindowParameters(root):
     root.update()

@@ -16,17 +16,14 @@ class TransformedImageStream(object):
         self.updateTransformation()
         return self.transformedFrame
 
-    def initiateFrameTransformation(self, event):
+    def initiateFrameTransformation(self, modelpath):
         if self.isShowingTransformation() and not self.asyncTransformator.isRunning():
-            self.startTransformationJob(self.cameraImageStream.getNextFrame())
+            self.asyncTransformator.startParallelTransformation(self.cameraImageStream.getNextFrame(), modelpath)
             return True
         return False
 
     def isShowingTransformation(self):
         return self.transformedFrame is None
-
-    def startTransformationJob(self, frame):
-        self.asyncTransformator.startParallelTransformation(frame)
 
     def forgetTransformation(self):
         self.transformedFrame = None

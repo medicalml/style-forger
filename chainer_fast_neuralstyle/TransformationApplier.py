@@ -10,7 +10,7 @@ import config
 ##
 
 class TransformationApplier:
-    def __init__(self, transferedArtStyles):
+    def __init__(self):
         self.model = FastStyleNet()
         self.modelPath = ""
 

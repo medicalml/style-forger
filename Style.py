@@ -1,5 +1,5 @@
 class Style:
-    def __init__(self, name, filepath, modelpath):
+    def __init__(self, name, imagepath, modelpath):
         self.name=name
-        self.filepath=filepath
+        self.imagepath=imagepath
         self.modelpath=modelpath
