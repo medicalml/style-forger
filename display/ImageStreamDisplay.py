@@ -11,10 +11,9 @@ class ImageStreamDisplay(Drawable):
         self.imageCenter = calculateImageCenter(*imageSize)
         self.currentRawImage = None
         self.currentPhoto = None
-        self.isHidden = False
 
     def draw(self, timePassed):
-        if not self.isHidden:
+        if not self._isHidden:
             newRawImage = self.imageProvider.getNextFrame()
             if newRawImage is not None:
                 if not newRawImage is self.currentRawImage:  #compare object equality for performance on static stream

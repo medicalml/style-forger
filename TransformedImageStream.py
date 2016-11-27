@@ -19,6 +19,8 @@ class TransformedImageStream(object):
     def initiateFrameTransformation(self, event):
         if self.isShowingTransformation() and not self.asyncTransformator.isRunning():
             self.startTransformationJob(self.cameraImageStream.getNextFrame())
+            return True
+        return False
 
     def isShowingTransformation(self):
         return self.transformedFrame is None

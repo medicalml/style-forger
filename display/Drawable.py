@@ -1,13 +1,17 @@
 
 class Drawable(object):
     def __init__(self):
-        self.isHidden = False
+        self._isHidden = False
 
     def draw(self, timePassed):
         pass
 
     def hide(self):
-        self.isHidden = True
+        self._isHidden = True
 
     def show(self):
-        self.isHidden = False
+        self.reset()
+        self._isHidden = False
+
+    def reset(self):
+        pass
