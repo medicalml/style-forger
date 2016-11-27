@@ -7,33 +7,30 @@ from TransformedImageStream import TransformedImageStream
 
 
 class Application(object):
-    def __init__(self, root):
+    def __init__(self, root, transferedArtStyles):
         self.root = root
-        windowSize, windowCenter = _getWindowParameters(root)
-        self.canvas = FullscreenCanvas(root, windowSize)
+        self.windowSize, self.windowCenter = _getWindowParameters(root)
+        self.canvas = FullscreenCanvas(root, self.windowSize)
 
         actionWithNotify = lambda x : self.notifyTransformationFinish(x)
         cameraImageStream = CameraImageStream()
         self.transformedImageStream = TransformedImageStream(root, cameraImageStream, transformationApplier, actionWithNotify)
 
-        self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, cameraImageStream, windowSize))
-        self.transformationDisplay = ImageStreamDisplay(self.canvas, self.transformedImageStream, windowSize)
+        self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, cameraImageStream, self.windowSize))
+        self.transformationDisplay = ImageStreamDisplay(self.canvas, self.transformedImageStream, self.windowSize)
         self.canvas.addDrawableChild(self.transformationDisplay)
-        self.processingAnimation = ImageCircleAnimation(self.canvas, windowCenter)
-        self.processingAnimation.hide()
-        self.canvas.addDrawableChild(self.processingAnimation)
+        self.processingAnimation = None
 
         root.bind('<Return>', self.initiateFrameTransformation)
 
     def notifyTransformationFinish(self, imageRaw):
-        self.processingAnimation.hide()
+        self.canvas.removeDrawableChild(self.processingAnimation)
         afterTransformationAction(imageRaw)
 
     def initiateFrameTransformation(self, event):
         if self.transformedImageStream.initiateFrameTransformation(event):
-            self.processingAnimation.show()
-
-
+            self.processingAnimation = ImageCircleAnimation(self.canvas, self.windowCenter)
+            self.canvas.addDrawableChild(self.processingAnimation)
 
 def _getWindowParameters(root):
     root.update()
