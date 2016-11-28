@@ -10,20 +10,15 @@ import config
 ##
 
 class TransformationApplier:
-    def __init__(self):
-        self.model = FastStyleNet()
-        self.modelPath = ""
-
     def transform(self, image, modelPath):
         self.loadModelFromPath(modelPath)
-        return generate(self.model, image)
-
+        return generate(self.loadModelFromPath(modelPath), image, config.GPU_UNIT)
 
     def loadModelFromPath(self, modelPath):
-        if self.modelPath != modelPath:
-            self.modelPath = modelPath
-            print "start loading model: ", modelPath
-            serializers.load_npz(modelPath, self.model)
-            if config.GPU_UNIT >= 0:
-                cuda.get_device(config.GPU_UNIT).use() #assuming only one gpu
-                self.model.to_gpu()
+        model = FastStyleNet()
+        print "start loading model: ", modelPath
+        serializers.load_npz(modelPath, model)
+        if config.GPU_UNIT >= 0:
+            cuda.get_device(config.GPU_UNIT).use() #assuming only one gpu
+            model.to_gpu()
+        return model
