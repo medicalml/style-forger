@@ -6,9 +6,9 @@ class AsyncTransformator(object):
         self.transformationApplier = transformationApplier
         self.transformationPromise = None
 
-    def startParallelTransformation(self, frame):
+    def startParallelTransformation(self, frame, modelpath):
         self.transformationPromise = self.pool.apply_async(self.transformationApplier.transform,
-                                                           (self.transformationApplier, frame))
+                                                           (frame, modelpath))
 
     def isRunning(self):
         return self.transformationPromise is not None

@@ -9,16 +9,21 @@ import config
 #  causing common model and ???
 ##
 
-class TransformationApplier(object):
+class TransformationApplier:
     def __init__(self):
         self.model = FastStyleNet()
-        modelPath = 'chainer_fast_neuralstyle/kandinsky_e2_full512.model'
-        print "start loading model: ", modelPath
-        serializers.load_npz(modelPath, self.model)
-        if config.GPU_UNIT >= 0:
-            cuda.get_device(config.GPU_UNIT).use() #assuming only one core
-            self.model.to_gpu()
+        self.modelPath = ""
 
-    @staticmethod
-    def transform(self, image):
-        return generate(self.model, image, config.GPU_UNIT)
+    def transform(self, image, modelPath):
+        self.loadModelFromPath(modelPath)
+        return generate(self.model, image)
+
+
+    def loadModelFromPath(self, modelPath):
+        if self.modelPath != modelPath:
+            self.modelPath = modelPath
+            print "start loading model: ", modelPath
+            serializers.load_npz(modelPath, self.model)
+            if config.GPU_UNIT >= 0:
+                cuda.get_device(config.GPU_UNIT).use() #assuming only one gpu
+                self.model.to_gpu()

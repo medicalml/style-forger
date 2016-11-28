@@ -9,12 +9,11 @@ class ImageCircleAnimation(Animation):
     cycleDuration = 5000
     circleStartSize = 1
     sizeDifference = 500
-    imagePath = "url.jpg"
 
-    def __init__(self, canvas, imageCenter):
+    def __init__(self, canvas, imageCenter, imagePath):
         Animation.__init__(self, canvas, self.drawCommand, ImageCircleAnimation.cycleDuration)
         self.imageCenter = imageCenter
-        image = Image.open(ImageCircleAnimation.imagePath)
+        image = Image.open(imagePath)
         self.croppedImageSource = cropCircleImage(image)
         self.easingFunction = easeOutElastic
 

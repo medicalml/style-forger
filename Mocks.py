@@ -5,8 +5,8 @@ class TransformationApplierMock(object):
     def __init__(self, sleepTime):
         self.sleepTime = sleepTime
         pass
-    @staticmethod
-    def transform(self, frame):
+
+    def transform(self, frame, modelpath):
         sleep(self.sleepTime)
         frame = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
         return frame

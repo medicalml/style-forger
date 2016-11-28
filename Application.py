@@ -1,24 +1,44 @@
+import random
 from display.FullscreenCanvas import FullscreenCanvas
 from display.ImageCircleAnimation import ImageCircleAnimation
 from display.ImageStreamDisplay import ImageStreamDisplay
-from initialization import initializeImageStreams
+from initialization import transformationApplier, afterTransformationAction
+from CameraImageStream import CameraImageStream
+from TransformedImageStream import TransformedImageStream
 
 
 class Application(object):
-    def __init__(self, root):
+    def __init__(self, root, transferedArtStyles):
         self.root = root
-        windowSize = _getWindowSize(root)
-        width, height = windowSize
-        windowCenter = (width/2, height/2)
-        self.canvas = FullscreenCanvas(root, windowSize)
+        self.windowSize, self.windowCenter = _getWindowParameters(root)
+        self.canvas = FullscreenCanvas(root, self.windowSize)
+        self.transferedArtStyles = transferedArtStyles
 
-        cameraImageStream, transformedImageStream = initializeImageStreams(root)
-        self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, cameraImageStream, windowSize))
-        self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, transformedImageStream, windowSize))
-        self.canvas.addDrawableChild(ImageCircleAnimation(self.canvas, windowCenter))
+        actionWithNotify = lambda x : self.notifyTransformationFinish(x)
+        cameraImageStream = CameraImageStream()
+        self.transformedImageStream = TransformedImageStream(root, cameraImageStream, transformationApplier, actionWithNotify)
 
-        root.bind('<Return>', transformedImageStream.initiateFrameTransformation)
+        self.canvas.addDrawableChild(ImageStreamDisplay(self.canvas, cameraImageStream, self.windowSize))
+        self.transformationDisplay = ImageStreamDisplay(self.canvas, self.transformedImageStream, self.windowSize)
+        self.canvas.addDrawableChild(self.transformationDisplay)
+        self.processingAnimation = None
 
-def _getWindowSize(root):
+        root.bind('<Return>', self.initiateFrameTransformation)
+
+    def notifyTransformationFinish(self, imageRaw):
+        self.canvas.removeDrawableChild(self.processingAnimation)
+        afterTransformationAction(imageRaw)
+
+    def initiateFrameTransformation(self, event):
+        style = random.choice(self.transferedArtStyles)
+        if self.transformedImageStream.initiateFrameTransformation(style.modelpath):
+            self.processingAnimation = ImageCircleAnimation(self.canvas, self.windowCenter, style.imagepath)
+            self.canvas.addDrawableChild(self.processingAnimation)
+
+
+def _getWindowParameters(root):
     root.update()
-    return root.winfo_width(), root.winfo_height()
+    windowSize = root.winfo_width(), root.winfo_height()
+    width, height = windowSize
+    windowCenter = (width/2, height/2)
+    return windowSize, windowCenter

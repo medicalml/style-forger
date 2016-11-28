@@ -26,6 +26,9 @@ class FullscreenCanvas(tk.Canvas):
     def addDrawableChild(self, drawable):
         self.drawableChildren.append(drawable)
 
+    def removeDrawableChild(self, drawable):
+        self.drawableChildren.remove(drawable)
+
     def redraw(self):
         newTime = getPreciseTimeMs()
         timePassed = newTime - self.lastDrawTime
