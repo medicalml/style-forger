@@ -8,7 +8,7 @@ def resizeRawImage(imageRaw, size, cover = True):
 
 def resizeImage(image, size, cover = True):
     newSize = size if not cover else calculateSizeToCover(image.size, size)
-    resized = image.resize(newSize)
+    resized = image.resize(newSize, resample=Image.LANCZOS)
     return ImageTk.PhotoImage(resized)
 
 def calculateSizeToCover(srcSize, maxSize):
