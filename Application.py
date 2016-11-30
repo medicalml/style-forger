@@ -24,6 +24,8 @@ class Application(object):
         self.processingAnimation = None
 
         root.bind('<Return>', self.initiateFrameTransformation)
+        root.bind('<Button-1>', self.initiateFrameTransformation)
+        root.bind('<Button-2>', self.initiateFrameTransformation)
 
     def notifyTransformationFinish(self, imageRaw):
         self.canvas.removeDrawableChild(self.processingAnimation)
