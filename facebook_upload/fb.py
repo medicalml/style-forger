@@ -13,8 +13,7 @@ logging.basicConfig(filename="fb.log",
 def request_token(page_id):
 
     try:
-        # user_token = open('facebook_upload/user_token.txt', 'r').read()
-        user_token = open('user_token.txt', 'r').read()
+        user_token = open('facebook_upload/user_token.txt', 'r').read()
     except Exception as e:
         logging.error("Failed to open user token file with exception:")
         logging.error(e)
@@ -69,5 +68,3 @@ def upload_file(imageRaw, mock=False):
             log_message = "Failed to upload a photo (no further information)"
             logging.error(log_message)
             return False
-
-upload_file(None, True)
