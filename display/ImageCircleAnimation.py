@@ -1,8 +1,8 @@
 from PIL.ImageTk import PhotoImage
-from Animation import Animation
+from display.Animation import Animation
 from PIL import Image
 from display.display_helpers import cropCircleImage
-from easing_functions import *
+from display.easing_functions import *
 
 
 class ImageCircleAnimation(Animation):

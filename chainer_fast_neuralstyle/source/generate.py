@@ -1,9 +1,9 @@
 from __future__ import print_function
 import time
-
+import numpy as np
 from PIL import Image, ImageFilter
 from chainer import cuda, serializers
-from net import *
+from chainer_fast_neuralstyle.source.net import *
 
 def generate(model, _imageArray, _gpu = -1, _padding=50, _medianFilter=3):
     xp = np if _gpu < 0 else cuda.cupy

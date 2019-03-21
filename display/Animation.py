@@ -1,4 +1,4 @@
-from Drawable import Drawable
+from display.Drawable import Drawable
 
 class Animation(Drawable):
     def __init__(self, canvas, drawCommand, cycleDuration):

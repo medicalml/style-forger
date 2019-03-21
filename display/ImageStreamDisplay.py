@@ -1,5 +1,5 @@
 from helpers import resizeRawImage
-from Drawable import Drawable
+from display.Drawable import Drawable
 
 
 class ImageStreamDisplay(Drawable):

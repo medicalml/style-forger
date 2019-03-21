@@ -1,5 +1,5 @@
 import requests
-from StringIO import StringIO
+from io import StringIO
 from PIL import Image
 # import config
 import logging
@@ -11,7 +11,7 @@ logging.basicConfig(filename="fb.log",
                     datefmt='%m/%d/%Y %I:%M:%S %p')
 
 def request_token(page_id):
-
+    '''
     try:
         user_token = open('facebook_upload/user_token.txt', 'r').read()
     except Exception as e:
@@ -27,8 +27,16 @@ def request_token(page_id):
         return False
 
     return token_request.json()['access_token']
+    '''
+
+    return 'abc'
+
 
 def upload_file(imageRaw, mock=False):
+    return True
+
+
+def old_upload_file(imageRaw, mock=False):
     if not mock:
         image = Image.fromarray(imageRaw)
         imageStringIO = StringIO()

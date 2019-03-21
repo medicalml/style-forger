@@ -1,6 +1,6 @@
-import Tkinter as tk
+import tkinter as tk
 from helpers import RecurringTask
-from display_helpers import  getPreciseTimeMs
+from display.display_helpers import  getPreciseTimeMs
 import config
 
 

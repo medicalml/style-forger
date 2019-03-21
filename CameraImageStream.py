@@ -4,6 +4,7 @@ import config
 class CameraImageStream(object):
     def __init__(self):
         self.cap = cv2.VideoCapture(config.CAMERA_ID)
+        #self.cap = cv2.VideoCapture('/mnt/SAMSUNG/datasets/traffic-signs-recognition/demo/Demo.mp4')
         try:
             self.getNextFrame()
         except:

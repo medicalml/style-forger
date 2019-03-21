@@ -12,4 +12,5 @@ class TransformationApplierMock(object):
         return frame
 
 def afterTransformationActionMock(imageRaw):
+    cv2.imwrite('./test.png', imageRaw)
     print("afterTransformationActionMock: handling array with shape " + str(imageRaw.shape))
